@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XV Años Alondra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #fce4ec;
+            --accent-gold: #d4af37;
+            --text-dark: #2d3436;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .header-section {
+            padding-top: 40px;
+            padding-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #fff5f8 0%, #ffffff 100%);
+        }
+
+        h1, h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--accent-gold);
+        }
+
+        .elegant-title {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 4px;
+        }
+
+        .countdown-item {
+            background: white;
+            border: 1px solid var(--primary-pink);
+            border-radius: 12px;
+            min-width: 65px;
+            padding: 12px 5px;
+            box-shadow: 0 4px 15px rgba(252, 228, 236, 0.5);
+        }
+
+        .btn-action {
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .fade-in {
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .family-card {
+            background: linear-gradient(135deg, #fffcfd 0%, #fdf2f5 100%);
+            border: 1px solid #fce4ec;
+        }
+
+        /* Estilo Polaroid para la única foto visible */
+        .polaroid-frame {
+            background-color: white;
+            padding: 15px 15px 45px 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transform: rotate(-2deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.03);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA CON NOMBRE -->
+    <div class="header-section fade-in">
+        <h1 class="text-7xl md:text-8xl mb-2 drop-shadow-sm">Alondra</h1>
+        <p class="elegant-title text-xs md:text-sm text-gray-400 tracking-[0.5em] uppercase">Mis Quince Años</p>
+    </div>
+
+    <!-- SECCIÓN PERSONALIZADA POR FAMILIA -->
+    <div class="max-w-md mx-auto px-6 mt-4 relative z-10">
+        <div class="family-card rounded-3xl p-6 text-center shadow-lg border-b-4 border-pink-100">
+            <p class="text-[10px] uppercase tracking-[0.3em] text-pink-400 mb-2">Invitación Especial para:</p>
+            <h3 id="display-familia" class="elegant-title text-xl font-bold text-gray-700 mb-1">Familia Cercana</h3>
+            <div class="h-[1px] w-20 bg-pink-200 mx-auto my-3"></div>
+            <p class="text-sm text-gray-500">Hemos reservado <span id="display-pases" class="font-bold text-pink-500 text-lg">_</span> lugares para ustedes.</p>
+        </div>
+    </div>
+
+    <!-- SECCIÓN FOTO PRINCIPAL (ESTILO POLAROID) -->
+    <div class="max-w-md mx-auto px-10 py-12 flex justify-center fade-in">
+        <div class="polaroid-frame w-full max-w-[300px]">
+            <img src="foto3.png" alt="Foto de Alondra" class="w-full h-auto">
+            <p class="text-center mt-5 font-['Great_Vibes'] text-3xl text-pink-400">Momentos mágicos</p>
+        </div>
+    </div>
+
+    <div class="flex justify-center my-4">
+        <span class="text-3xl text-pink-200">🌸</span>
+        <span class="text-4xl text-pink-300 mx-4">🍃</span>
+        <span class="text-3xl text-pink-200">🌸</span>
+    </div>
+
+    <div class="max-w-md mx-auto px-6 text-center space-y-10 pb-20">
+        <!-- Introducción -->
+        <p class="italic text-gray-600 leading-relaxed font-light px-4">
+            "Hay momentos en la vida que son especiales por sí solos, compartirlos con las personas que quieres los hace inolvidables."
+        </p>
+
+        <!-- Fecha -->
+        <div class="bg-pink-50/30 py-8 rounded-2xl border border-pink-100">
+            <p class="elegant-title text-lg font-bold mb-1">Sábado</p>
+            <div class="flex items-center justify-center space-x-4">
+                <div class="h-[1px] w-10 bg-gold-400"></div>
+                <p class="text-6xl font-light text-pink-400">28</p>
+                <div class="h-[1px] w-10 bg-gold-400"></div>
+            </div>
+            <p class="elegant-title text-lg font-bold mt-1">Marzo • 2026</p>
+        </div>
+
+        <!-- Contador -->
+        <div class="space-y-4">
+            <p class="text-[10px] uppercase tracking-widest text-gray-400">Faltan solo:</p>
+            <div class="grid grid-cols-4 gap-2 text-center" id="countdown">
+                <div class="countdown-item">
+                    <span id="days" class="block text-2xl font-bold text-gray-700">00</span>
+                    <span class="text-[9px] uppercase text-pink-400">Días</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours" class="block text-2xl font-bold text-gray-700">00</span>
+                    <span class="text-[9px] uppercase text-pink-400">Hrs</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes" class="block text-2xl font-bold text-gray-700">00</span>
+                    <span class="text-[9px] uppercase text-pink-400">Min</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds" class="block text-2xl font-bold text-gray-700">00</span>
+                    <span class="text-[9px] uppercase text-pink-400">Seg</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ubicaciones -->
+        <div class="space-y-12">
+            <div class="space-y-4">
+                <h2 class="text-4xl">Ceremonia Religiosa</h2>
+                <div class="text-gray-600">
+                    <p class="font-semibold text-lg">18:00 HRS</p>
+                    <p class="text-sm">Templo del Sagrado Corazón</p>
+                    <p class="text-xs italic">Uriangato, Guanajuato</p>
+                </div>
+                <a href="https://www.google.com/maps/search/Templo+del+Sagrado+Corazón+Uriangato+Guanajuato" target="_blank" 
+                   class="inline-block bg-white border border-pink-200 px-8 py-3 rounded-full text-[10px] btn-action shadow-sm">
+                    📍 Ver Mapa del Templo
+                </a>
+            </div>
+
+            <div class="text-pink-100 text-2xl">✨</div>
+
+            <div class="space-y-4">
+                <h2 class="text-4xl">Recepción</h2>
+                <div class="text-gray-600">
+                    <p class="font-semibold text-lg">Después de la misa</p>
+                    <p class="text-sm">Salón Quinta Real La Jolla</p>
+                    <p class="text-xs italic">Uriangato, Guanajuato</p>
+                </div>
+                <a href="https://www.google.com/maps/search/Quinta+Real+La+Jolla+Uriangato+Guanajuato" target="_blank" 
+                   class="inline-block bg-white border border-pink-200 px-8 py-3 rounded-full text-[10px] btn-action shadow-sm">
+                    📍 Ver Mapa del Salón
+                </a>
+            </div>
+        </div>
+
+        <!-- Confirmación -->
+        <div class="pt-10">
+            <div class="bg-gradient-to-b from-white to-pink-50 p-8 rounded-[2rem] border border-pink-100 shadow-xl">
+                <p class="text-xs mb-6 font-semibold uppercase tracking-widest text-pink-500">¿Nos acompañas?</p>
+                <a id="whatsapp-btn" href="#" target="_blank"
+                   class="flex items-center justify-center space-x-2 bg-[#25D366] text-white py-4 rounded-2xl shadow-lg hover:bg-[#1ebe57] transition-colors btn-action text-sm">
+                   <span>Confirmar Asistencia</span>
+                </a>
+                <p class="text-[10px] text-gray-400 mt-4 italic">Favor de confirmar antes del 10 de Marzo</p>
+            </div>
+        </div>
+
+        <footer class="pt-10 text-gray-300 text-[9px] tracking-[0.5em] uppercase">
+            Alondra • 2026 • Uriangato
+        </footer>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const familia = urlParams.get('familia') || 'Familia e Invitados';
+        const pases = urlParams.get('pases') || 'varios';
+
+        document.getElementById('display-familia').innerText = 'Familia ' + familia;
+        document.getElementById('display-pases').innerText = pases;
+
+        const phoneNumber = "524451118688";
+        const message = `¡Hola! Confirmo con mucho gusto la asistencia de la Familia ${familia} a los XV años de Alondra.\n\n- Número de invitados: ${pases}\n- Confirmado por: `;
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        document.getElementById('whatsapp-btn').href = whatsappUrl;
+
+        const eventDate = new Date('March 28, 2026 18:00:00').getTime();
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        };
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
