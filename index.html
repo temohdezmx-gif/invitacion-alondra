@@ -6,6 +6,8 @@
     <title>XV Años Alondra</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for Music Button -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --primary-pink: #fce4ec;
@@ -74,7 +76,6 @@
             border: 1px solid #fce4ec;
         }
 
-        /* Estilo Polaroid para la única foto visible */
         .polaroid-frame {
             background-color: white;
             padding: 15px 15px 45px 15px;
@@ -86,9 +87,51 @@
         .polaroid-frame:hover {
             transform: rotate(0deg) scale(1.03);
         }
+
+        /* Music Button Styling */
+        .music-control {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 100;
+            background: white;
+            border: 1px solid var(--primary-pink);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-control.playing {
+            background: var(--primary-pink);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(252, 228, 236, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(252, 228, 236, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(252, 228, 236, 0); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- REPRODUCTOR DE MÚSICA (OCULTO) -->
+    <audio id="bg-music" loop>
+        <!-- URL de una versión instrumental adecuada de De Niña a Mujer -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- BOTÓN DE CONTROL DE MÚSICA -->
+    <div id="music-btn" class="music-control" onclick="toggleMusic()">
+        <i data-lucide="music" class="text-pink-400 w-6 h-6" id="music-icon"></i>
+    </div>
 
     <!-- CABECERA CON NOMBRE -->
     <div class="header-section fade-in">
@@ -103,6 +146,31 @@
             <h3 id="display-familia" class="elegant-title text-xl font-bold text-gray-700 mb-1">Familia Cercana</h3>
             <div class="h-[1px] w-20 bg-pink-200 mx-auto my-3"></div>
             <p class="text-sm text-gray-500">Hemos reservado <span id="display-pases" class="font-bold text-pink-500 text-lg">_</span> lugares para ustedes.</p>
+        </div>
+    </div>
+
+    <!-- SECCIÓN PADRES Y PADRINOS -->
+    <div class="max-w-md mx-auto px-6 mt-10 text-center fade-in">
+        <div class="mb-10">
+            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-4">En compañía de mis padres:</p>
+            <div class="space-y-1">
+                <p class="text-xl font-medium text-gray-700">Claudia Murillo Chávez</p>
+                <p class="text-lg text-pink-300">&</p>
+                <p class="text-xl font-medium text-gray-700">José Ramírez Villicaña</p>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-4">Y mis padrinos:</p>
+            <div class="space-y-1">
+                <p class="text-xl font-medium text-gray-700">Bertha Yadhira Murillo Chávez</p>
+                <p class="text-lg text-pink-300">&</p>
+                <p class="text-xl font-medium text-gray-700">Jorge Luis Rivera Murillo</p>
+            </div>
+        </div>
+
+        <div class="mt-8 text-gray-500 italic text-sm">
+            Tienen el honor de invitarles a celebrar este día tan especial.
         </div>
     </div>
 
@@ -121,7 +189,6 @@
     </div>
 
     <div class="max-w-md mx-auto px-6 text-center space-y-10 pb-20">
-        <!-- Introducción -->
         <p class="italic text-gray-600 leading-relaxed font-light px-4">
             "Hay momentos en la vida que son especiales por sí solos, compartirlos con las personas que quieres los hace inolvidables."
         </p>
@@ -209,6 +276,30 @@
     </div>
 
     <script>
+        // Inicializar íconos
+        lucide.createIcons();
+
+        // Función de Música
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.classList.remove('playing');
+                musicIcon.setAttribute('data-lucide', 'music');
+            } else {
+                music.play();
+                musicBtn.classList.add('playing');
+                musicIcon.setAttribute('data-lucide', 'pause');
+            }
+            isPlaying = !isPlaying;
+            lucide.createIcons();
+        }
+
+        // Parámetros URL
         const urlParams = new URLSearchParams(window.location.search);
         const familia = urlParams.get('familia') || 'Familia e Invitados';
         const pases = urlParams.get('pases') || 'varios';
@@ -221,6 +312,7 @@
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         document.getElementById('whatsapp-btn').href = whatsappUrl;
 
+        // Contador
         const eventDate = new Date('March 28, 2026 18:00:00').getTime();
         const updateCountdown = () => {
             const now = new Date().getTime();
@@ -230,10 +322,12 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            if (distance > 0) {
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            }
         };
 
         setInterval(updateCountdown, 1000);
