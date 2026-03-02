@@ -279,11 +279,12 @@
         // Inicializar íconos
         lucide.createIcons();
 
-        // Lógica de Música con Reproducción Automática
+        // Lógica de Música con Reproducción Automática y Scroll
         const music = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
         const musicIcon = document.getElementById('music-icon');
         let isPlaying = false;
+        let musicStarted = false;
 
         function updateMusicUI() {
             if (isPlaying) {
@@ -303,31 +304,38 @@
             } else {
                 music.play();
                 isPlaying = true;
+                musicStarted = true; // Si el usuario le da play manual, marcamos como iniciado
             }
             updateMusicUI();
         }
 
         // Función para intentar reproducir
         const attemptPlay = () => {
-            if (!isPlaying) {
+            if (!musicStarted && !isPlaying) {
                 music.play().then(() => {
                     isPlaying = true;
+                    musicStarted = true;
                     updateMusicUI();
-                    // Una vez que suena, quitamos los escuchadores de interacción
-                    document.removeEventListener('click', attemptPlay);
-                    document.removeEventListener('touchstart', attemptPlay);
+                    // Limpieza de eventos una vez que la música comienza
+                    removeInteractionListeners();
                 }).catch(error => {
-                    console.log("Reproducción automática bloqueada por el navegador. Esperando interacción.");
+                    console.log("Esperando interacción del usuario para reproducir audio.");
                 });
             }
         };
 
-        // Intentar al cargar
-        window.addEventListener('load', attemptPlay);
-        // Intentar al primer toque del usuario en cualquier parte
+        const removeInteractionListeners = () => {
+            document.removeEventListener('click', attemptPlay);
+            document.removeEventListener('touchstart', attemptPlay);
+            window.removeEventListener('scroll', attemptPlay);
+        };
+
+        // Escuchar el evento de scroll para iniciar la música
+        window.addEventListener('scroll', attemptPlay, { passive: true });
+        
+        // También intentar en clics o toques por si el usuario no hace scroll de inmediato
         document.addEventListener('click', attemptPlay);
         document.addEventListener('touchstart', attemptPlay);
-
 
         // Parámetros URL
         const urlParams = new URLSearchParams(window.location.search);
