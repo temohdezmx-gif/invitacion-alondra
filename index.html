@@ -78,15 +78,6 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        .fade-in {
-            animation: fadeIn 2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .family-card {
             background: linear-gradient(135deg, #fffcfd 0%, #fdf2f5 100%);
             border: 1px solid #fce4ec;
@@ -94,14 +85,9 @@
 
         .polaroid-frame {
             background-color: white;
-            padding: 15px 15px 45px 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            transform: rotate(-2deg);
-            transition: transform 0.5s ease;
-        }
-        
-        .polaroid-frame:hover {
-            transform: rotate(0deg) scale(1.03);
+            padding: 12px 12px 35px 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border: 1px solid #f9f9f9;
         }
 
         .music-control {
@@ -120,7 +106,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: all 0.3s ease;
-            visibility: hidden; /* Se muestra solo después de entrar */
+            visibility: hidden;
         }
 
         .music-control.playing {
@@ -132,6 +118,24 @@
             0% { box-shadow: 0 0 0 0 rgba(252, 228, 236, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(252, 228, 236, 0); }
             100% { box-shadow: 0 0 0 0 rgba(252, 228, 236, 0); }
+        }
+
+        /* Contenedores de Imágenes */
+        .img-container {
+            width: 100%;
+            max-width: 280px;
+            margin: 1.5rem auto;
+            overflow: hidden;
+            border: 3px solid #fff5f8;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .church-style {
+            border-radius: 100px 100px 10px 10px; /* Estilo arco */
+        }
+
+        .venue-style {
+            border-radius: 10px 10px 100px 100px; /* Estilo arco invertido */
         }
     </style>
 </head>
@@ -149,8 +153,7 @@
 
     <!-- REPRODUCTOR DE MÚSICA -->
     <audio id="bg-music" loop>
-        <!-- Fuente: Versión instrumental -->
-        <source src="bendicion.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
@@ -159,15 +162,15 @@
         <i data-lucide="music" class="text-pink-400 w-6 h-6" id="music-icon"></i>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL (Oculto inicialmente) -->
+    <!-- CONTENIDO PRINCIPAL -->
     <div id="main-content" class="opacity-0 transition-opacity duration-1000">
-        <!-- CABECERA CON NOMBRE -->
+        <!-- CABECERA -->
         <div class="header-section">
             <h1 class="text-7xl md:text-8xl mb-2 drop-shadow-sm">Alondra</h1>
             <p class="elegant-title text-xs md:text-sm text-gray-400 tracking-[0.5em] uppercase">Mis Quince Años</p>
         </div>
 
-        <!-- SECCIÓN PERSONALIZADA POR FAMILIA -->
+        <!-- PASES -->
         <div class="max-w-md mx-auto px-6 mt-4 relative z-10">
             <div class="family-card rounded-3xl p-6 text-center shadow-lg border-b-4 border-pink-100">
                 <p class="text-[10px] uppercase tracking-[0.3em] text-pink-400 mb-2">Invitación Especial para:</p>
@@ -177,7 +180,7 @@
             </div>
         </div>
 
-        <!-- SECCIÓN PADRES Y PADRINOS -->
+        <!-- PADRES Y PADRINOS -->
         <div class="max-w-md mx-auto px-6 mt-10 text-center">
             <div class="mb-10">
                 <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-4">En compañía de mis padres:</p>
@@ -198,10 +201,10 @@
             </div>
         </div>
 
-        <!-- SECCIÓN FOTO PRINCIPAL -->
+        <!-- FOTO PRINCIPAL -->
         <div class="max-w-md mx-auto px-10 py-12 flex justify-center">
-            <div class="polaroid-frame w-full max-w-[300px]">
-                <img src="foto3.jpg" alt="Foto de Alondra" class="w-full h-auto">
+            <div class="polaroid-frame w-full max-w-[300px] transform rotate-[-2deg]">
+                <img src="foto3.png" alt="Foto de Alondra" class="w-full h-auto">
                 <p class="text-center mt-5 font-['Great_Vibes'] text-3xl text-pink-400">Momentos mágicos</p>
             </div>
         </div>
@@ -224,21 +227,17 @@
                 <p class="elegant-title text-lg font-bold mt-1">Marzo • 2026</p>
             </div>
 
-            <!-- Contador -->
-            <div class="space-y-4">
-                <p class="text-[10px] uppercase tracking-widest text-gray-400">Faltan solo:</p>
-                <div class="grid grid-cols-4 gap-2 text-center" id="countdown">
-                    <div class="countdown-item"><span id="days" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Días</span></div>
-                    <div class="countdown-item"><span id="hours" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Hrs</span></div>
-                    <div class="countdown-item"><span id="minutes" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Min</span></div>
-                    <div class="countdown-item"><span id="seconds" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Seg</span></div>
-                </div>
-            </div>
-
             <!-- Ubicaciones -->
             <div class="space-y-12">
+                <!-- CEREMONIA -->
                 <div class="space-y-4">
                     <h2 class="text-4xl">Ceremonia Religiosa</h2>
+                    
+                    <!-- Imagen del Templo -->
+                    <div class="img-container church-style">
+                        <img src="templo.jpg" alt="Imagen del Templo" class="w-full h-full object-cover min-h-[200px]" onerror="this.src='https://images.unsplash.com/photo-1548705085-101177834f47?q=80&w=500&auto=format&fit=crop'">
+                    </div>
+
                     <div class="text-gray-600">
                         <p class="font-semibold text-lg">18:00 HRS</p>
                         <p class="text-sm">Templo del Sagrado Corazón</p>
@@ -250,8 +249,17 @@
                     </a>
                 </div>
 
+                <div class="h-[1px] w-24 bg-pink-100 mx-auto"></div>
+
+                <!-- RECEPCIÓN -->
                 <div class="space-y-4">
                     <h2 class="text-4xl">Recepción</h2>
+
+                    <!-- Imagen del Salón -->
+                    <div class="img-container venue-style">
+                        <img src="salon.jpg" alt="Imagen del Salón" class="w-full h-full object-cover min-h-[200px]" onerror="this.src='https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=500&auto=format&fit=crop'">
+                    </div>
+
                     <div class="text-gray-600">
                         <p class="font-semibold text-lg">Después de la misa</p>
                         <p class="text-sm">Salón Quinta Real La Jolla</p>
@@ -261,6 +269,17 @@
                        class="inline-block bg-white border border-pink-200 px-8 py-3 rounded-full text-[10px] btn-action shadow-sm">
                         📍 Ver Mapa del Salón
                     </a>
+                </div>
+            </div>
+
+            <!-- Contador -->
+            <div class="space-y-4 pt-4">
+                <p class="text-[10px] uppercase tracking-widest text-gray-400">Faltan solo:</p>
+                <div class="grid grid-cols-4 gap-2 text-center" id="countdown">
+                    <div class="countdown-item"><span id="days" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Días</span></div>
+                    <div class="countdown-item"><span id="hours" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Hrs</span></div>
+                    <div class="countdown-item"><span id="minutes" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Min</span></div>
+                    <div class="countdown-item"><span id="seconds" class="block text-2xl font-bold text-gray-700">00</span><span class="text-[9px] uppercase text-pink-400">Seg</span></div>
                 </div>
             </div>
 
@@ -282,7 +301,6 @@
     </div>
 
     <script>
-        // Inicializar íconos
         lucide.createIcons();
 
         const music = document.getElementById('bg-music');
@@ -290,16 +308,13 @@
         const musicIcon = document.getElementById('music-icon');
         let isPlaying = false;
 
-        // FUNCIÓN PRINCIPAL DE ENTRADA
         function startInvitation() {
-            // Reproducir música (esto ahora funcionará porque es disparado por un clic)
             music.play().then(() => {
                 isPlaying = true;
                 musicBtn.style.visibility = "visible";
                 updateMusicUI();
-            }).catch(e => console.log("Error al reproducir audio"));
+            }).catch(e => console.log("Audio waiting for interaction"));
 
-            // Ocultar pantalla de entrada
             const overlay = document.getElementById('entry-overlay');
             overlay.style.opacity = '0';
             setTimeout(() => {
@@ -330,7 +345,6 @@
             updateMusicUI();
         }
 
-        // Parámetros URL y WhatsApp
         const urlParams = new URLSearchParams(window.location.search);
         const familia = urlParams.get('familia') || 'Amigos y Familiares';
         const pases = urlParams.get('pases') || 'Invitados';
@@ -340,7 +354,6 @@
         const message = `¡Hola! Confirmo la asistencia de la Familia ${familia} a los XV años de Alondra. (${pases} pases)`;
         document.getElementById('whatsapp-btn').href = `https://wa.me/524451118688?text=${encodeURIComponent(message)}`;
 
-        // Contador
         const eventDate = new Date('March 28, 2026 18:00:00').getTime();
         setInterval(() => {
             const distance = eventDate - new Date().getTime();
